@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% load static %}
+
+
+{% block menu %}
+    {% include 'inc_main_menu.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc_header_menu.html' %}
+    <!--    <section class="page-header">-->
+    <!--        <div class="container">-->
+
+    <!--            &lt;!&ndash; Start of Page Title &ndash;&gt;-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-md-12">-->
+    <!--                    <h2>Поиск</h2>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            &lt;!&ndash; End of Page Title &ndash;&gt;-->
+
+    <!--            &lt;!&ndash; Start of Breadcrumb &ndash;&gt;-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-md-12">-->
+    <!--                    <ul class="breadcrumb">-->
+    <!--                        <li><a href="{% url 'index' %}">На главную</a></li>-->
+    <!--                        <li class="active">Поиск</li>-->
+    <!--                        <li><a href="{% url 'search_vacancy' %}">расширенный поиск вакансий</a>-->
+    <!--                        </li>-->
+    <!--                        <li><a href="{% url 'search_cv' %}">расширенный поиск резюме</a></li>-->
+
+    <!--                    </ul>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            &lt;!&ndash; End of Breadcrumb &ndash;&gt;-->
+
+    <!--        </div>-->
+    <!--    </section>-->
+{% endblock %}
+
+
+{% block content %}
+    <section class="search-jobs ptb80">
+        <div class="container">
+            <!-- Start of Form -->
+            <form class="row job-search-form row " method="get" action=".">
+
+                <div class="col-md-8 col-sm-12 search-keywords">
+                    {% render_field form.q class="form-control" %}
+                </div>
+
+                <!-- Start of submit input -->
+                <div class="col-md-4 col-sm-12 search-submit">
+                    <button type="submit" class="btn btn-blue btn-effect"><i
+                            class="fa fa-search"></i>Найти
+                    </button>
+                </div>
+
+            </form>
+            <!-- Start of Row -->
+        </div>
+    </section>
+    <section class="find-candidate">
+        <div class="container">
+            <div class="row mt60">
+
+                <!-- Start of Candidate Main -->
+                <div class="col-md-12 candidate-main">
+
+                    <!-- Start of Candidates Wrapper -->
+                    <div class="candidate-wrapper">
+                        {% if query %}
+                            {% for result in page.object_list %}
+                                {% if result.object.status_id == 2 or result.object.status_id == 5 %}
+                                    {% if result.object.post %}
+
+                                        <!-- ===== Start of Single Candidate 1 ===== -->
+                                        <div class="single-candidate row nomargin">
+
+                                            <!-- Candidate Image -->
+                                            <div class="col-md-2 col-xs-3">
+                                                <div class="candidate-img">
+                                                    <img width="200" height="200"
+                                                         src="{% if result.object.worker_profile.image %} {{ result.object.worker_profile.image.url }} {% else %} {% static 'img/users/default_avatar.jpg' %} {% endif %}"
+                                                         class="img-responsive">
+                                                </div>
+                                            </div>
+
+                                            <!-- Start of Candidate Name & Info -->
+                                            <div class="col-md-8 col-xs-6 ptb20">
+                                                <div class="job-post-header clearfix">
+                                                    Резюме
+                                                </div>
+                                                <!-- Candidate Name -->
+                                                <div class="candidate-name">
+                                                    {% if user.id != None and user.role.id != 3 %}
+                                                        <a href="{% url 'cv:detail_cv' result.object.id %}">
+                                                            <h5>{{ result.object.post }}</h5></a>
+                                                    {% else %}
+                                                        <a href="{% url 'users:login' %}">
+                                                            <h5>{{ result.object.post }}</h5>
+                                                            <p style="color:red"> Просматривать
+                                                                резюме могут только
+                                                                авторизованные
+                                                                работодатели</p></a>
+                                                    {% endif %}
+                                                </div>
+
+                                                <!-- Candidate Info -->
+                                                <div class="candidate-info mt5">
+                                                    <ul class="list-inline">
+                                                        <li>
+                                                        <span><i
+                                                                class="fa fa-money"></i>{{ result.object.salary }} RUB</span>
+                                                        </li>
+
+                                                        <li>
+                                                        <span><i
+                                                                class="fa fa-map-marker"></i>{{ result.object.worker_profile.city }} </span>
+                                                        </li>
+
+                                                        <li>
+                                                        <span><i
+                                                                class="fa fa-briefcase"></i>{{ result.object.speciality.name }} </span>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                            <!-- End of Candidate Name & Info -->
+                                            <!-- CTA -->
+                                            <div class="col-md-2 col-xs-3">
+                                                <div class="candidate-cta ptb30">
+                                                    <a href="{% url 'favorites:employer_add_remove' cv_id=result.object.id %}"
+                                                       style="color: lightgray">
+                                                        {% if result.object.id in favourite_list and user.role_id == 2 %}
+
+
+                                                            <div class="pull-right" style="color: goldenrod"><h3>★</h3>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="pull-right"><h3>★</h3></div>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    {% endif %}
+                                    {% if result.object.name %}
+                                        <div class="single-candidate row nomargin">
+
+                                            <!-- Vacancy Image -->
+                                            <div class="col-md-2 col-xs-3">
+                                                <div class="candidate-img">
+                                                    <img width="200" height="200"
+                                                         src="{% if result.object.employer_profile.image %} {{ result.object.employer_profile.image.url }} {% else %} {% static 'img/users/default_avatar.jpg' %} {% endif %}"
+                                                         class="img-responsive">
+                                                </div>
+                                            </div>
+
+                                            <!-- Start of Vacancy Name & Info -->
+                                            <div class="col-md-8 col-xs-6 ptb20">
+                                                <div class="job-post-header clearfix">
+                                                    Вакансия
+                                                </div>
+                                                <!-- Vacancy Name -->
+                                                <div class="candidate-name">
+                                                    {% if user.id != None and user.role.id != 2 %}
+                                                        <a href="{% url 'vacancy:detail_vacancy' result.object.id %}">
+                                                            <h5>{{ result.object.name }}</h5></a>
+                                                    {% else %}
+                                                        <a href="{% url 'users:login' %}">
+                                                            <h5>{{ result.object.name }}</h5>
+                                                            <p style="color:red"> Просматривать
+                                                                вакансии могут только
+                                                                авторизованные
+                                                                соискатели</p>
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+
+                                                <!-- Vacancy Info -->
+                                                <div class="candidate-info mt5">
+                                                    <ul class="list-inline">
+                                                        <li>
+                                                        <span><i
+                                                                class="fa fa-money"></i>{{ result.object.salary_from }} - {{ result.object.salary_to }} RUB</span>
+                                                        </li>
+
+                                                        <li>
+                                                        <span><i
+                                                                class="fa fa-map-marker"></i>{{ result.object.employer_profile.city }} </span>
+                                                        </li>
+
+                                                        <li>
+                                                        <span><i
+                                                                class="fa fa-briefcase"></i>{{ result.object.specialization.name }} </span>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                            <!-- End of Candidate Name & Info -->
+                                            <!-- CTA -->
+                                            <div class="col-md-2 col-xs-3">
+                                                <div class="candidate-cta ptb30">
+                                                    <a href="{% url 'favorites:worker_add_remove' vacancy_id=result.object.id %}"
+                                                       style="color: lightgray">
+                                                        {% if result.object.id in favourite_list and user.role_id == 3 %}
+
+
+                                                            <div class="pull-right" style="color: goldenrod"><h3>★</h3>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="pull-right"><h3>★</h3></div>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- ===== End of Single Candidate ===== -->
+                                    {% endif %}
+                                {% endif %}
+                            {% empty %}
+                                <p>Ничего не найдено...</p>
+                            {% endfor %}
+                            <div class="single-candidate row nomargin"
+                                 style="height: 1px; padding: 0px">
+                            </div>
+                            {#                    {% if page.has_previous or page.has_next %}#}
+                            <div class="col-md-12 mt10">
+                                <ul class="pagination list-inline text-center">
+                                    {% if page.has_previous %}
+                                        <li>
+                                            <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}"><<</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if page.has_other_pages %}
+                                        <li class="active"><a
+                                                href="?q={{ query }}&amp;page={{ page.number }}">{{ page.number }}</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if page.has_next %}
+                                        <li>
+                                            <a href="?q={{ query }}&amp;page={{ page.next_page_number }}">>></a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="ptb80"></div>
+            <!-- End of Form -->
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc_footer.html' %}
+{% endblock %}

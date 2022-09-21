@@ -1,0 +1,7 @@
+{{ object.post}}
+{{ object.salary}}
+{{ object.speciality}}
+{{ object.education_level}}
+{{ object.moving}}
+{{ object.status_id}}
+

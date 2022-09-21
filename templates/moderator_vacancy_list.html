@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block menu %}
+    {% include 'inc_main_menu.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc_header_menu.html'%}
+{% endblock %}
+
+{% block content %}
+
+    <section class="find-candidate ptb80">
+        <div class="container">
+            <!-- Start of Row -->
+            <div class="row mt60">
+                <p>Статус:</p>
+                <div class="radio radio-group-opt vac_status">
+
+                    <div class="col-md-2 col-sm-6">
+                        <label style="display: inline-block"><input style="display: inline-block" type="radio"
+                                                                    name="vac" value="pub"  checked>Опубликовано</label>
+                    </div>
+                    <div class="col-md-2 col-sm-6">
+                        <label style="display: inline-block"><input style="display: inline-block" type="radio"
+                                                                    name="vac" value="frv">На доработку</label>
+                    </div>
+                    <div class="col-md-2 col-sm-6">
+                        <label style="display: inline-block"><input style="display: inline-block" type="radio"
+                                                                    name="vac" value="rjc">Отклонено</label>
+                    </div>
+                    <div class="col-md-2 col-sm-6">
+                        <label style="display: inline-block"><input style="display: inline-block" type="radio"
+                                                                    name="vac" value="apv">Одобрено</label>
+                    </div>
+                    <div class="col-md-2 col-sm-6">
+                        <label style="display: inline-block"><input style="display: inline-block" type="radio"
+                                                                    name="vac" value="all">все</label>
+                    </div>
+                </div>
+
+
+                {%  include 'vac_list.html' %}
+
+            </div>
+            </div>
+
+    </section>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc_footer.html' %}
+{% endblock %}

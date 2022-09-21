@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/inc_relation_detail_section.css' %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block menu %}
+    {% include 'inc_main_menu.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc_header_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'inc_relation_detail_section.html' %}
+    {% include 'inc_relation_modal_form.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc_footer.html' %}
+{% endblock %}
+
+{% block additional_script %}
+   <script src="{% static 'js/relation.js' %}"></script>
+{% endblock %}
