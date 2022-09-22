@@ -14,7 +14,7 @@ python3 manage.py fill_test_data
 python3 manage.py rebuild_index
 cd ..
 chown -R django /home/django/
-chmod -R 777 /home/django/gb_31_best_py/
+chmod -R 777 /home/django/BestJob_Django/
 cp gunicorn.service /etc/systemd/system/gunicorn.service
 systemctl enable gunicorn
 systemctl start gunicorn
