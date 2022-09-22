@@ -1,0 +1,15 @@
+server {
+listen 80;
+server_name 188.119.65.249;
+location = /favicon.ico { access_log off; log_not_found off; }
+location /static/ {
+root /var/www/bestjob;
+}
+location /media/ {
+root /home/django/gb_31_best_py/BestJob;
+}
+location / {
+include proxy_params;
+proxy_pass http://unix:/home/django/gb_31_best_py/BestJob/BestJob.sock;
+}
+}
