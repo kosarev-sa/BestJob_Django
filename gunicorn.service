@@ -4,7 +4,7 @@ After=network.target
 [Service]
 User=django
 Group=www-data
-WorkingDirectory=/home/django/gb_31_best_py/BestJob
-ExecStart=/home/django/gb_31_best_py/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/django/gb_31_best_py/BestJob/BestJob.sock BestJob.wsgi
+WorkingDirectory=/home/django/BestJob_Django/BestJob
+ExecStart=/home/django/BestJob_Django/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/django/gb_31_best_py/BestJob/BestJob.sock BestJob.wsgi
 [Install]
 WantedBy=multi-user.target

@@ -6,10 +6,10 @@ location /static/ {
 root /var/www/bestjob;
 }
 location /media/ {
-root /home/django/gb_31_best_py/BestJob;
+root /home/django/BestJob_Django/BestJob;
 }
 location / {
 include proxy_params;
-proxy_pass http://unix:/home/django/gb_31_best_py/BestJob/BestJob.sock;
+proxy_pass http://unix:/home/django/BestJob_Django/BestJob/BestJob.sock;
 }
 }
