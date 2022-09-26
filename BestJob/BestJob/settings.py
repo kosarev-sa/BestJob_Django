@@ -168,7 +168,7 @@ USER_EMAIL_KEY_LIFETIME = 48
 # настройки для подтверждения email
 # для получения в термина ссылки (linux):  sudo python3 -m smtpd -n -c DebuggingServer localhost:25
 # для получения в термина ссылки (windows):  python -m smtpd -n -c DebuggingServer localhost:25
-DOMAIN_NAME = 'http://188.119.65.249'
+DOMAIN_NAME = '195.133.23.182'
 
 if os.getenv('EMAIL_HOST'):
     EMAIL_HOST = os.getenv('EMAIL_HOST')

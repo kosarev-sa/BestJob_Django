@@ -1,6 +1,6 @@
 server {
 listen 80;
-server_name 188.119.65.249;
+server_name 195.133.23.182;
 location = /favicon.ico { access_log off; log_not_found off; }
 location /static/ {
 root /var/www/bestjob;
