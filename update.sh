@@ -1,5 +1,5 @@
 #!/bin/bash
 
 git pull
-python3 ./BestJob/manage.py collectstatic
+python3 manage.py collectstatic
 ./restart.sh
